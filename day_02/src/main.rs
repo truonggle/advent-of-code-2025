@@ -21,8 +21,8 @@ fn main() -> Result<()> {
             }
             b'-' => parsing_first = false,
             b',' => {
-                total_sum += part_1(&first, &second);
-                //total_sum += part_2(&first, &second);
+                //total_sum += part_1(&first, &second);
+                total_sum += part_2(&first, &second);
                 first = 0;
                 second = 0;
                 parsing_first = true;
@@ -36,6 +36,25 @@ fn main() -> Result<()> {
 
 fn part_2(lo: &u64, hi: &u64) -> u64 {
     let mut total_sum = 0u64;
+
+    for num in *lo..=*hi {
+        let str = num.to_string();
+        let len = str.len();
+
+        for sub_len in 1..=len / 2 {
+            if len % sub_len != 0 {
+                continue;
+            }
+            let repetitions = len / sub_len;
+            let sub_str = &str[..sub_len];
+            let repeated = sub_str.repeat(repetitions);
+
+            if repeated == str {
+                total_sum += num;
+                break;
+            }
+        }
+    }
     total_sum
 }
 
